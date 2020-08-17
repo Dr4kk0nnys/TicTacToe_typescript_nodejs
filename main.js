@@ -5,6 +5,7 @@ class Main {
         this.board = new Array(9);
         this.populateFakeBoard();
         this.readGameBoard();
+        console.log(this.board);
     }
     populateEmptyBoard() {
         this.board.fill(' ');
@@ -13,16 +14,18 @@ class Main {
     populateFakeBoard() {
         const randomPossibilities = ['X', 'O'];
         for (let i = 0; i < this.board.length; i++) {
-            this.board[i] = randomPossibilities[Math.floor(Math.random() * randomPossibilities.length)];
+            const randomNumber = Math.floor(Math.random() * randomPossibilities.length);
+            this.board[i] = randomPossibilities[randomNumber];
         }
     }
     readGameBoard() {
-        for (let i = 0; i < 3; i++) {
-            let line = '';
-            for (let j = 0; j < 3; j++) {
-                line += this.board[i + j] + ' | ';
+        let line = '';
+        for (let i = 0; i < this.board.length; i++) {
+            line += this.board[i] + ' | ';
+            if ((i + 1) % 3 === 0) {
+                console.log(line);
+                line = '';
             }
-            console.log(line);
         }
     }
     handleUserInput() {
