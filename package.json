@@ -1,0 +1,12 @@
+{
+  "name": "Testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@types/prompt-sync": "^4.1.0",
+    "prompt-sync": "^4.2.0",
+    "typescript": "^3.9.7"
+  }
+}
