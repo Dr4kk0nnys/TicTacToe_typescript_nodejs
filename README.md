@@ -3,7 +3,8 @@
 Typescript is kind of a secret to me. I've just recently figured it out good and efficient ways to make OOP code. In this project, I'm trying to improve at it.
 
 ## Code Efficiency
-If you're a huge fan of code efficiency like me, you're not going jump off the chair just yet. This is a beginners level project.
+If you're a huge fan of code efficiency like me, you're not going jump off the chair just yet. This is a beginners level project.  
+Nevertheless, I'm trying my best to implement a high functional, easy to read, easy to maintain code.  
 
 ## Tic Tac Toe
 Why Tic Tac Toe ? Why not any other project ?  
