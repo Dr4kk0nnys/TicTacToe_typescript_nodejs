@@ -6,13 +6,7 @@ class Main {
         // this.populateFakeBoard(); // Testing only
         this.board = new Array(9);
         this.populateEmptyBoard();
-        for (let i = 0; i < 5; i++) {
-            this.readGameBoard();
-            const position = this.handleUserInput();
-            if (this.isPositionAvailable(position)) {
-                this.board[position] = 'X';
-            }
-        }
+        console.log(this.handleUserInput());
     }
     populateEmptyBoard() {
         this.board.fill(' ');
@@ -56,28 +50,50 @@ class Main {
     */
     handleUserInput() {
         const userInput = input('[1 ~ 9]: ');
-        // validating the user input
-        if (/^\d+$/.test(userInput)) { // if the userInput is a number
-            const sanitizedUserInput = (+userInput) - 1;
-            /*
-                * Lots of things to cover
-                *
-                * +userInput -> parsing a string to number
-                * of course the user has to type a number for the index
-                * of the position in the board, they want to play in
-                * but that's not the job of the getting input part
-                * that's the job of the validation part
-                *
-                * - 1 -> the array is index 0. But in the real game
-                * the index is 1 ~ 9, not 0 ~ 8. In order to fix that
-                * we can simply remove 1 to the userInput, transforming
-                * it 1 ~ 9 index. ( you type 1 ( the first index ), but the game
-                * understands it as 0 ( the first index ))
-            */
-            // valid index play
-            if (sanitizedUserInput >= 0 && sanitizedUserInput <= 8) {
-                return sanitizedUserInput;
+        const validation = validateUserInput(userInput);
+        if (validation.isValidated) {
+            return validation.sanitizedUserInput;
+        }
+        else {
+            return handleIncorrectUserInput();
+        }
+        function handleIncorrectUserInput() {
+            while (true) {
+                console.log('Incorrect Input! It must be a number, with 1 ~ 9 index! Try again.');
+                const newUserInput = input('[1 ~ 9]: ');
+                const newValidation = validateUserInput(newUserInput);
+                if (newValidation.isValidated)
+                    return newValidation.sanitizedUserInput;
             }
+        }
+        function validateUserInput(userInput) {
+            /*
+                * If the user's input is correct, it returns an object
+                    * { isValidated: true, sanitizedUserInput }
+                * otherwise, it returns { isValidated: false }
+            */
+            if (/^\d+$/.test(userInput)) {
+                const sanitizedUserInput = (+userInput) - 1;
+                /*
+                    * Lots of things to cover
+                    *
+                    * +userInput -> parsing a string to number
+                    * of course the user has to type a number for the index
+                    * of the position in the board, they want to play in
+                    * but that's not the job of the getting input part
+                    * that's the job of the validation part
+                    *
+                    * - 1 -> the array is index 0. But in the real game
+                    * the index is 1 ~ 9, not 0 ~ 8. In order to fix that
+                    * we can simply remove 1 to the userInput, transforming
+                    * it 1 ~ 9 index. ( you type 1 ( the first index ), but the game
+                    * understands it as 0 ( the first index ))
+                */
+                if (sanitizedUserInput >= 0 && sanitizedUserInput <= 8) {
+                    return { isValidated: true, sanitizedUserInput };
+                }
+            }
+            return { isValidated: false };
         }
     }
     isPositionAvailable(position) {
