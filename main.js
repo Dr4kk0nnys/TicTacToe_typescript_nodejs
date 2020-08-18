@@ -41,7 +41,42 @@ class Main {
             }
         }
     }
+    /*
+        * Handle user input gets the user input
+        * handle's it ( sanitize it ), and return the sanitized input
+        * which is the position the user want's to put a 'X' on the board
+        *
+        * It also makes the user give the right input
+    */
     handleUserInput() {
+        const userInput = input('[1 ~ 9]: ');
+        // validating the user input
+        if (/^\$+d/.test(userInput)) { // if the userInput is a number
+            const sanitizedUserInput = (+userInput) + 1;
+            /*
+                * Lots of things to cover
+                *
+                * +userInput -> parsing a string to number
+                * of course the user has to type a number for the index
+                * of the position in the board, they want to play in
+                * but that's not the job of the getting input part
+                * that's the job of the validation part
+                *
+                * + 1 -> the array is index 0. But in the real game
+                * the index is 1 ~ 9, not 0 ~ 8. In order to fix that
+                * we can simply add 1 to the userInput, transforming
+                * it 1 ~ 9 index.
+            */
+            // valid index play
+            if (sanitizedUserInput >= 1 && sanitizedUserInput <= 9) {
+                return sanitizedUserInput;
+            }
+        }
     }
 }
 const main = new Main();
+// TODO: Add at the handle user input, 'error' feedback ( if the user gives a wrong input, display an error message, and aks again for the input )
+// TODO: At the start, ask if it's a multiplayer game, or a sole game
+// TODO: If it's a solo game, display an input asking for the difficulty
+// TODO: Work on the solo game functionality
+// TODO: Work on the multiplayer game functionality ( x and o )
