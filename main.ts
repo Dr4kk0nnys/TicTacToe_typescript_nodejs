@@ -125,8 +125,8 @@ class Main {
 
 const main = new Main();
 
-// TODO: Add at the handle user input, 'error' feedback ( if the user gives a wrong input, display an error message, and aks again for the input )
 // TODO: At the start, ask if it's a multiplayer game, or a sole game
 // TODO: If it's a solo game, display an input asking for the difficulty
 // TODO: Work on the solo game functionality
 // TODO: Work on the multiplayer game functionality ( x and o )
+// TODO: To implement single player and multi player functionality, create a SinglePlayer class, and extend it from the main class, and only do the SinglePlayer code functionality
