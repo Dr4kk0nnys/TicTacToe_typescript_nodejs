@@ -1,17 +1,23 @@
 import PromptSync from 'prompt-sync';
 const input = PromptSync({ sigint: true });
 class Main {
+    // Using it as a game loop
     constructor() {
         // this.populateFakeBoard(); // Testing only
-        // board is an array with fixed 9 index
         this.board = new Array(9);
         this.populateEmptyBoard();
-        this.readGameBoard();
+        for (let i = 0; i < 5; i++) {
+            this.readGameBoard();
+            const position = this.handleUserInput();
+            if (this.isPositionAvailable(position)) {
+                this.board[position] = 'X';
+            }
+        }
     }
     populateEmptyBoard() {
         this.board.fill(' ');
     }
-    // testing / developing only
+    // testing/developing only
     populateFakeBoard() {
         const randomPossibilities = ['X', 'O'];
         for (let i = 0; i < this.board.length; i++) {
@@ -51,8 +57,8 @@ class Main {
     handleUserInput() {
         const userInput = input('[1 ~ 9]: ');
         // validating the user input
-        if (/^\$+d/.test(userInput)) { // if the userInput is a number
-            const sanitizedUserInput = (+userInput) + 1;
+        if (/^\d+$/.test(userInput)) { // if the userInput is a number
+            const sanitizedUserInput = (+userInput) - 1;
             /*
                 * Lots of things to cover
                 *
@@ -62,16 +68,22 @@ class Main {
                 * but that's not the job of the getting input part
                 * that's the job of the validation part
                 *
-                * + 1 -> the array is index 0. But in the real game
+                * - 1 -> the array is index 0. But in the real game
                 * the index is 1 ~ 9, not 0 ~ 8. In order to fix that
-                * we can simply add 1 to the userInput, transforming
-                * it 1 ~ 9 index.
+                * we can simply remove 1 to the userInput, transforming
+                * it 1 ~ 9 index. ( you type 1 ( the first index ), but the game
+                * understands it as 0 ( the first index ))
             */
             // valid index play
-            if (sanitizedUserInput >= 1 && sanitizedUserInput <= 9) {
+            if (sanitizedUserInput >= 0 && sanitizedUserInput <= 8) {
                 return sanitizedUserInput;
             }
         }
+    }
+    isPositionAvailable(position) {
+        if (this.board[position] !== ' ')
+            return false;
+        return true;
     }
 }
 const main = new Main();
