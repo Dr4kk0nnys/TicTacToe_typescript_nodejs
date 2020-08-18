@@ -14,9 +14,7 @@ class Main {
         console.log(this.handleUserInput());
     }
 
-    populateEmptyBoard(): void {
-        this.board.fill(' ');
-    }
+    populateEmptyBoard(): void { this.board.fill(' '); }
 
     // testing/developing only
     populateFakeBoard(): void {
@@ -63,14 +61,10 @@ class Main {
     */
     handleUserInput(): number {
         const userInput = input('[1 ~ 9]: ');
-
         const validation = validateUserInput(userInput);
 
-        if (validation.isValidated) {
-            return validation.sanitizedUserInput;
-        } else {
-            return handleIncorrectUserInput();
-        }
+        if (validation.isValidated) { return validation.sanitizedUserInput; }
+        else { return handleIncorrectUserInput(); }
 
         function handleIncorrectUserInput(): number {
             while (true) {
