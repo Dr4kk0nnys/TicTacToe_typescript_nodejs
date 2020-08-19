@@ -8,13 +8,15 @@ class Main {
         this.gameLoop();
     }
     gameLoop() {
-        for (let i = 0; i < 5; i++) {
+        while (this.board.some((value, index) => this.board[index] === ' ')) {
             this.readGameBoard();
             this.board[this.handleUserInput()] = 'X';
             this.board[this.AI()] = 'O';
         }
+        console.log('out');
     }
     populateEmptyBoard() { this.board.fill(' '); }
+    ;
     // testing/developing only
     populateFakeBoard() {
         const randomPossibilities = ['X', 'O'];
@@ -53,24 +55,14 @@ class Main {
         * It also makes the user give the right input
     */
     handleUserInput() {
-        const userInput = input('[1 ~ 9]: ');
-        const validation = validateUserInput(userInput);
-        if (validation.isValidated) {
-            return validation.sanitizedUserInput;
-        }
-        else {
-            return handleIncorrectUserInput();
-        }
-        function handleIncorrectUserInput() {
-            while (true) {
-                console.log('Incorrect Input! It must be a number, with 1 ~ 9 index! Try again.');
-                const newUserInput = input('[1 ~ 9]: ');
-                const newValidation = validateUserInput(newUserInput);
-                if (newValidation.isValidated)
-                    return newValidation.sanitizedUserInput;
-            }
-        }
-        function validateUserInput(userInput) {
+        /*
+            * I have to use an arrow function here, because
+            * inside a normal function, this.board.length returns undefined
+            * After reading for a while, I found this:
+            * https://stackoverflow.com/questions/56844015/class-variable-undefined-inside-function
+            * Gotta love js man, gotta love it.
+        */
+        const validateUserInput = (userInput) => {
             /*
                 * If the user's input is correct, it returns an object
                     * { isValidated: true, sanitizedUserInput }
@@ -93,16 +85,38 @@ class Main {
                     * it 1 ~ 9 index. ( you type 1 ( the first index ), but the game
                     * understands it as 0 ( the first index ))
                 */
+                if (!this.isPositionAvailable(sanitizedUserInput))
+                    return { isValidated: false };
                 if (sanitizedUserInput >= 0 && sanitizedUserInput <= 8) {
                     return { isValidated: true, sanitizedUserInput };
                 }
             }
             return { isValidated: false };
+        };
+        const userInput = input('[1 ~ 9]: ');
+        const validation = validateUserInput(userInput);
+        if (validation.isValidated) {
+            return validation.sanitizedUserInput;
+        }
+        else {
+            return handleIncorrectUserInput();
+        }
+        function handleIncorrectUserInput() {
+            while (true) {
+                console.log('Incorrect Input! It must be a number, with 1 ~ 9 index! Try again.');
+                const newUserInput = input('[1 ~ 9]: ');
+                const newValidation = validateUserInput(newUserInput);
+                if (newValidation.isValidated)
+                    return newValidation.sanitizedUserInput;
+            }
         }
     }
     isPositionAvailable(position) {
-        if (this.board[position] !== ' ')
+        if (this.board[position] != ' ') {
+            console.log('Position not available');
             return false;
+        }
+        console.log('Position available');
         return true;
     }
     /*
