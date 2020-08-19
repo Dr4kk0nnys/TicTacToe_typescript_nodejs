@@ -1,7 +1,6 @@
 import PromptSync from 'prompt-sync';
 const input = PromptSync({ sigint: true });
 class Main {
-    // Using it as a game loop
     constructor() {
         // this.populateFakeBoard(); // Testing only
         this.board = new Array(9);
@@ -12,6 +11,7 @@ class Main {
         for (let i = 0; i < 5; i++) {
             this.readGameBoard();
             this.board[this.handleUserInput()] = 'X';
+            this.board[this.AI()] = 'O';
         }
     }
     populateEmptyBoard() { this.board.fill(' '); }
@@ -104,6 +104,28 @@ class Main {
         if (this.board[position] !== ' ')
             return false;
         return true;
+    }
+    /*
+        * The AI ( Definitely not an AI, just don't know what to call it )
+        * Looks for a random spot to place
+        * in the future, this will be way better
+        * For now, it's just an empty feature
+    */
+    AI() {
+        /*
+            * I have to use an arrow function here, because
+            * inside a normal function, this.board.length returns undefined
+            * After reading for a while, I found this:
+            * https://stackoverflow.com/questions/56844015/class-variable-undefined-inside-function
+            * Gotta love js man, gotta love it.
+        */
+        const getRandomNumber = () => Math.floor(Math.random() * this.board.length);
+        let randomNumber = getRandomNumber();
+        while (true) {
+            if (this.isPositionAvailable(randomNumber))
+                return randomNumber;
+            randomNumber = getRandomNumber();
+        }
     }
 }
 const main = new Main();

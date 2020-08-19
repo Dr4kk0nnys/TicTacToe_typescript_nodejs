@@ -17,6 +17,7 @@ class Main {
             this.readGameBoard();
 
             this.board[this.handleUserInput()] = 'X';
+            this.board[this.AI()] = 'O';
         }
     }
 
@@ -130,15 +131,21 @@ class Main {
     */
     AI(): number {
 
+        /*
+            * I have to use an arrow function here, because
+            * inside a normal function, this.board.length returns undefined
+            * After reading for a while, I found this:
+            * https://stackoverflow.com/questions/56844015/class-variable-undefined-inside-function
+            * Gotta love js man, gotta love it.
+        */
+        const getRandomNumber = (): number => Math.floor(Math.random() * this.board.length);
+
         let randomNumber = getRandomNumber();
+
         while (true) {
             if (this.isPositionAvailable(randomNumber)) return randomNumber;
 
             randomNumber = getRandomNumber();
-        }
-
-        function getRandomNumber(): number {
-            return Math.floor(Math.random() * this.board.length);
         }
     }
 }
