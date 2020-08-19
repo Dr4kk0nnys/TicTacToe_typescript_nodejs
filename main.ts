@@ -10,8 +10,15 @@ class Main {
         // this.populateFakeBoard(); // Testing only
 
         this.populateEmptyBoard();
+        this.gameLoop();
+    }
 
-        console.log(this.handleUserInput());
+    gameLoop(): void {
+        for (let i = 0; i < 5; i++) {
+            this.readGameBoard();
+
+            this.board[this.handleUserInput()] = 'X';
+        }
     }
 
     populateEmptyBoard(): void { this.board.fill(' '); }

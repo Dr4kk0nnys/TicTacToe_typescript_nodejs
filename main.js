@@ -6,11 +6,15 @@ class Main {
         // this.populateFakeBoard(); // Testing only
         this.board = new Array(9);
         this.populateEmptyBoard();
-        console.log(this.handleUserInput());
+        this.gameLoop();
     }
-    populateEmptyBoard() {
-        this.board.fill(' ');
+    gameLoop() {
+        for (let i = 0; i < 5; i++) {
+            this.readGameBoard();
+            this.board[this.handleUserInput()] = 'X';
+        }
     }
+    populateEmptyBoard() { this.board.fill(' '); }
     // testing/developing only
     populateFakeBoard() {
         const randomPossibilities = ['X', 'O'];
@@ -107,3 +111,4 @@ const main = new Main();
 // TODO: If it's a solo game, display an input asking for the difficulty
 // TODO: Work on the solo game functionality
 // TODO: Work on the multiplayer game functionality ( x and o )
+// TODO: To implement single player and multi player functionality, create a SinglePlayer class, and extend it from the main class, and only do the SinglePlayer code functionality
