@@ -5,7 +5,6 @@ const input = PromptSync({ sigint: true });
 class Main {
     board = new Array<string>(9);
 
-    // Using it as a game loop
     constructor() {
         // this.populateFakeBoard(); // Testing only
 
@@ -121,6 +120,26 @@ class Main {
         if (this.board[position] !== ' ') return false;
 
         return true;
+    }
+
+    /*
+        * The AI ( Definitely not an AI, just don't know what to call it )
+        * Looks for a random spot to place
+        * in the future, this will be way better
+        * For now, it's just an empty feature
+    */
+    AI(): number {
+
+        let randomNumber = getRandomNumber();
+        while (true) {
+            if (this.isPositionAvailable(randomNumber)) return randomNumber;
+
+            randomNumber = getRandomNumber();
+        }
+
+        function getRandomNumber(): number {
+            return Math.floor(Math.random() * this.board.length);
+        }
     }
 }
 
