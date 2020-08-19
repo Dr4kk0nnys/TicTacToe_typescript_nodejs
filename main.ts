@@ -19,6 +19,17 @@ class Main {
 
             this.readGameBoard();
 
+            /*
+                * This piece of code won't work effectively anywhere on this loop
+                * not even on the while
+                    * while(!this.gameShouldEnd())
+                    * returns true only after 1 iteration
+                * Try to place this line anywhere on the code, and it won't work
+                * and I have absolutely no idea why
+                * If I try to replace this line with the same logic, it breaks again
+                * If I try to replace it with an arrow function in the same spot, it breaks
+                *  ...
+            */
             if (this.gameShouldEnd()) break;
 
             this.board[this.handleUserInput()] = 'X';
