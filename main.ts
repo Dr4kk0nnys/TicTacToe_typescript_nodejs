@@ -131,13 +131,7 @@ class Main {
     }
 
     isPositionAvailable(position: number): boolean {
-        if (this.board[position] != ' ') {
-            console.log('Position not available');
-            return false;
-        }
-
-        console.log('Position available');
-        return true;
+        return (this.board[position] == ' ' ? true : false);
     }
 
     /*

@@ -112,12 +112,7 @@ class Main {
         }
     }
     isPositionAvailable(position) {
-        if (this.board[position] != ' ') {
-            console.log('Position not available');
-            return false;
-        }
-        console.log('Position available');
-        return true;
+        return (this.board[position] == ' ' ? true : false);
     }
     /*
         * The AI ( Definitely not an AI, just don't know what to call it )
