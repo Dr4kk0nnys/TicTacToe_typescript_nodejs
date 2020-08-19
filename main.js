@@ -8,12 +8,18 @@ class Main {
         this.gameLoop();
     }
     gameLoop() {
-        while (this.board.some((value, index) => this.board[index] === ' ')) {
-            this.readGameBoard();
-            this.board[this.handleUserInput()] = 'X';
+        while (true) {
             this.board[this.AI()] = 'O';
+            this.readGameBoard();
+            if (this.gameShouldEnd())
+                break;
+            this.board[this.handleUserInput()] = 'X';
         }
-        console.log('out');
+    }
+    gameShouldEnd() {
+        if (this.board.some((element) => element === ' '))
+            return false;
+        return true;
     }
     populateEmptyBoard() { this.board.fill(' '); }
     ;
@@ -137,7 +143,7 @@ class Main {
         }
     }
 }
-const main = new Main();
+new Main();
 // TODO: At the start, ask if it's a multiplayer game, or a sole game
 // TODO: If it's a solo game, display an input asking for the difficulty
 // TODO: Work on the solo game functionality
