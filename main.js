@@ -11,15 +11,10 @@ class Main {
         while (true) {
             this.board[this.AI()] = 'O';
             this.readGameBoard();
-            if (this.gameShouldEnd())
+            if (!this.board.some(element => element === ' '))
                 break;
             this.board[this.handleUserInput()] = 'X';
         }
-    }
-    gameShouldEnd() {
-        if (this.board.some((element) => element === ' '))
-            return false;
-        return true;
     }
     populateEmptyBoard() { this.board.fill(' '); }
     ;

@@ -18,6 +18,7 @@ class Main {
             this.board[this.AI()] = 'O';
 
             this.readGameBoard();
+            if (!this.board.some(element => element === ' ')) break;
 
             this.board[this.handleUserInput()] = 'X';
         }
