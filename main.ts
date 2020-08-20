@@ -22,8 +22,10 @@ class Main {
             const gameLogic = this.gameLogic();
             if (gameLogic.gameShouldEnd) {
 
-                if (!gameLogic.draw) console.log(`Player ${gameLogic.player.player} WON!`);
-                if (gameLogic.draw) console.log('DRAW!!');
+                if (!gameLogic.draw)
+                    console.log(`Player ${gameLogic.player.player} WON!`);
+                else
+                    console.log('DRAW!!');
 
                 break;
             }
