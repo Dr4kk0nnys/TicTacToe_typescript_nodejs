@@ -18,7 +18,15 @@ class Main {
             this.board[this.AI()] = 'O';
 
             this.readGameBoard();
-            if (!this.board.some(element => element === ' ')) break;
+
+            const gameLogic = this.gameLogic();
+            if (gameLogic.gameShouldEnd) {
+
+                if (!gameLogic.draw) console.log(`Player ${gameLogic.player.player} WON!`);
+                if (gameLogic.draw) console.log('DRAW!!');
+
+                break;
+            }
 
             this.board[this.handleUserInput()] = 'X';
         }
@@ -157,6 +165,39 @@ class Main {
 
             randomNumber = getRandomNumber();
         }
+    }
+
+    gameLogic(): { gameShouldEnd: boolean, player?: { player: string, score: number; }, draw: boolean; } {
+
+        type playerScore = {
+            player: string;
+            score: number;
+        };
+        const player1: playerScore = { player: 'X', score: 0 };
+        const player2: playerScore = { player: 'O', score: 0 };
+
+        /*
+            * Logic to see if one of the players won
+            * Note: This is the horizontal version
+            * [0, 1, 2], [3, 4, 5], [6, 7, 8]
+        */
+        for (let i = 0; i < this.board.length; i++) {
+            this.board[i] === 'X' ? player1.score++ : this.board[i] === 'O' ? player2.score++ : null;
+
+            // every other line
+            if ((i + 1) % 3 === 0) {
+                if (player1.score === 3) return { gameShouldEnd: true, player: player1, draw: false };
+                if (player2.score === 3) return { gameShouldEnd: true, player: player2, draw: false };
+
+                player1.score = 0;
+                player2.score = 0;
+            }
+        }
+
+        // checking if there is no empty spaces
+        if (!this.board.some(element => element === ' ')) return { gameShouldEnd: true, draw: true };
+
+        return { gameShouldEnd: false, draw: false };
     }
 }
 
