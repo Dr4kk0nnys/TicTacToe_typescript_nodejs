@@ -50,6 +50,7 @@ class Main {
                     * But what's the fun of that ? And also, it would've been slower
                 */
                 console.log(line);
+                console.log('___________');
                 line = '';
             }
         }
@@ -206,6 +207,30 @@ class Main {
                 * This logic not only allow us to only use one loop ( code is prettier )
                 * It also allow us to do a quick overview of the code and understand it as a whole
             */
+        }
+        /*
+            * Logic to see if one of the players won
+            * Note: This is the diagonal version
+            * [0, 4, 8], [2, 4, 6]
+            *
+            * WORST PART OF THE CODE, >>> WORKING ON IT <<<
+            * IT IS UGLY, I KNOW
+        */
+        for (let i = 0; i < this.board.length; i += 4) {
+            this.board[i] === 'X' ? player1.score++ : this.board[i] === 'O' ? player2.score++ : null;
+            if (player1.score === 3)
+                return { gameShouldEnd: true, player: player1, draw: false };
+            if (player2.score === 3)
+                return { gameShouldEnd: true, player: player2, draw: false };
+        }
+        player1.score = 0;
+        player2.score = 0;
+        for (let i = 2; i < (this.board.length - 1); i += 2) {
+            this.board[i] === 'X' ? player1.score++ : this.board[i] === 'O' ? player2.score++ : null;
+            if (player1.score === 3)
+                return { gameShouldEnd: true, player: player1, draw: false };
+            if (player2.score === 3)
+                return { gameShouldEnd: true, player: player2, draw: false };
         }
         // checking if there is no empty spaces
         if (!this.board.some(element => element === ' '))

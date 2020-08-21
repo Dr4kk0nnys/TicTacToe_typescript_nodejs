@@ -243,6 +243,31 @@ class Main {
             */
         }
 
+        /*
+            * Logic to see if one of the players won
+            * Note: This is the diagonal version
+            * [0, 4, 8], [2, 4, 6]
+            * 
+            * WORST PART OF THE CODE, >>> WORKING ON IT <<<
+            * IT IS UGLY, I KNOW
+        */
+        for (let i = 0; i < this.board.length; i += 4) {
+            this.board[i] === 'X' ? player1.score++ : this.board[i] === 'O' ? player2.score++ : null;
+
+            if (player1.score === 3) return { gameShouldEnd: true, player: player1, draw: false };
+            if (player2.score === 3) return { gameShouldEnd: true, player: player2, draw: false };
+        }
+
+        player1.score = 0;
+        player2.score = 0;
+
+        for (let i = 2; i < (this.board.length - 1); i += 2) {
+            this.board[i] === 'X' ? player1.score++ : this.board[i] === 'O' ? player2.score++ : null;
+
+            if (player1.score === 3) return { gameShouldEnd: true, player: player1, draw: false };
+            if (player2.score === 3) return { gameShouldEnd: true, player: player2, draw: false };
+        }
+
         // checking if there is no empty spaces
         if (!this.board.some(element => element === ' ')) return { gameShouldEnd: true, draw: true };
 
