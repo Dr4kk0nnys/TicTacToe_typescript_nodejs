@@ -196,6 +196,53 @@ class Main {
             }
         }
 
+        /*
+            * Logic to see if one of the players won
+            * Note: This is the vertical version
+            * [0, 3, 6], [1, 4, 7], [2, 5, 8]
+        */
+        for (let i = 0, j = 0; i < this.board.length; i++) {
+            this.board[j] === 'X' ? player1.score++ : this.board[j] === 'O' ? player2.score++ : null;
+
+            if ((i + 1) % 3 === 0) {
+                if (player1.score === 3) return { gameShouldEnd: true, player: player1, draw: false };
+                if (player2.score === 3) return { gameShouldEnd: true, player: player2, draw: false };
+
+                player1.score = 0;
+                player2.score = 0;
+
+                j -= 5;
+                continue;
+            }
+
+            j += 3;
+            /*
+                * Explanation about the 'j' variable
+                * 
+                * If you look closely, you will realize that the coefficient of
+                * the vertical line is 3. Meaning we need to sum the 'i' value with 3
+                * every iteration, and somehow reset it when the number of loop iterations is
+                * divisible by three. Although I didn't used the 'i' variable, I used the same
+                * logic described.
+                * 
+                * j += 3 ->
+                * 'j' is summed with the coefficient of each loop iteration, allowing it 
+                * to search for each vertical line, ( made done the following sequence ):
+                * 1 ) [0]     2) [1]      3) [2]
+                *     [3]        [4]         [5]
+                *     [6]        [7]         [6]
+                * 
+                * j -= 5 ->
+                * 'j' is subtracted by five, since it's the coefficient of the difference
+                * between the last number of each column by the first one of the next column
+                * 6 ( the last number of the first row  ) - 1 ( the first number of the second row ) = 5
+                * 7 ( the last number of the second row ) - 2 ( the first number of the third row  ) = 5
+                * 
+                * This logic not only allow us to only use one loop ( code is prettier )
+                * It also allow us to do a quick overview of the code and understand it as a whole
+            */
+        }
+
         // checking if there is no empty spaces
         if (!this.board.some(element => element === ' ')) return { gameShouldEnd: true, draw: true };
 
